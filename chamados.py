@@ -1,3 +1,13 @@
+import sqlite3
+
+def conexao_banco():
+  conexao = sqlite3.connect('chamados.db')
+  cursor = conexao.cursor()
+  sql = '''CREATE TABLE IF NOT EXISTS chamados ( id INTEGER PRIMARY KEY AUTOINCREMENT, titulo TEXT, prioridade TEXT, status TEXT, usuario TEXT)'''
+  cursor.execute(sql)
+  conexao.commit()
+  return conexao
+
 chamados = [
   { "id": 1, "titulo": "Erro no login", "prioridade": "Alta", "status": "Aberto", "usuario": "Ana Silva" },
   { "id": 2, "titulo": "Tela branca no app", "prioridade": "Crítica", "status": "Aberto", "usuario": "Bruno Costa" },
@@ -63,7 +73,7 @@ chamados = [
 def usuario():
   nome = input("Qual o nome do usuário que deseja ver? ")
   for chamado in chamados:
-    if nome.lower() in chamado["usuario".lower()]:
+    if nome.lower() in chamado["usuario"].lower():
       print(chamado)
       
 def prioridade():
